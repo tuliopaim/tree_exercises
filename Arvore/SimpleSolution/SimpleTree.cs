@@ -65,9 +65,4 @@ public class SimpleTree
 
         Console.WriteLine($"{distanceStr}{value}");
     }
-
-    public override string ToString() =>
-        $"Values: [{string.Join(", ", LeftNodes)}, {Root}, {string.Join(", ", RightNodes)}]" +
-        $"Left Nodes: [{string.Join(", ", LeftNodes)}]" +
-        $"Right Nodes: [{string.Join(", ", RightNodes)}]";
 }

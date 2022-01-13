@@ -25,8 +25,7 @@ public class Tree
         leftOfMaxValue.Sort();
         leftOfMaxValue.Reverse();
 
-        foreach (var value in leftOfMaxValue)
-            Root.AddLeftChild(value);
+        leftOfMaxValue.ForEach(Root.AddLeftNode);
     }
 
     private void AddRightValues(List<int> values, int maxValueIndex)
@@ -38,9 +37,8 @@ public class Tree
 
         rightOfMaxValue.Sort();
         rightOfMaxValue.Reverse();
-
-        foreach (var value in rightOfMaxValue)
-            Root.AddRightChild(value);
+                
+        rightOfMaxValue.ForEach(Root.AddRightNode);
     }
 
     public void PrintTree()

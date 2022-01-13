@@ -9,37 +9,46 @@ public class TreeNode
 
     public int Value { get; }
 
-    public TreeNode? LeftChild { get; private set; }
+    public TreeNode? LeftNode { get; private set; }
 
-    public TreeNode? RightChild { get; private set; }
+    public TreeNode? RightNode { get; private set; }
 
-    public void AddLeftChild(int value)
+    public void AddLeftNode(int value)
     {
-        if (LeftChild is null)
+        if (LeftNode is null)
         {
-            LeftChild = new TreeNode(value);
+            LeftNode = new TreeNode(value);
             return;
         }
 
-        LeftChild.AddLeftChild(value);
+        LeftNode.AddLeftNode(value);
     }
 
-    public void AddRightChild(int value)
+    public void AddRightNode(int value)
     {
-        if (RightChild is null)
+        if (RightNode is null)
         {
-            RightChild = new TreeNode(value);
+            RightNode = new TreeNode(value);
             return;
         }
 
-        RightChild.AddRightChild(value);
+        RightNode.AddRightNode(value);
     }
 
     public void PrintNode(int distanceFromStart = 0)
     {
-        if(LeftChild is not null)
+        Console.WriteLine("(right)");
+
+        RecursivelyPrintNode(distanceFromStart);
+
+        Console.WriteLine("(left)");
+    }
+
+    private void RecursivelyPrintNode(int distanceFromStart)
+    {
+        if (RightNode is not null)
         {
-            LeftChild.PrintNode(distanceFromStart + 1);
+            RightNode.RecursivelyPrintNode(distanceFromStart + 1);
         }
 
         var distanceStr = "";
@@ -48,10 +57,10 @@ public class TreeNode
             distanceStr += "| ";
 
         Console.WriteLine($"{distanceStr}{Value}");
-                
-        if(RightChild is not null)
+
+        if (LeftNode is not null)
         {
-            RightChild.PrintNode(distanceFromStart + 1);
+            LeftNode.RecursivelyPrintNode(distanceFromStart + 1);
         }
     }
 }
