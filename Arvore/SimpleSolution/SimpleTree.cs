@@ -4,37 +4,60 @@ public class SimpleTree
 {
     public SimpleTree(List<int> values)
     {
-        var maxValue = values.Max();
-        var maxValueIndex = values.IndexOf(maxValue);
+        Root = values.Max();
+        var rootIndex = values.IndexOf(Root);
 
-        Root = maxValue;
-
-        AddLeftValues(values, maxValueIndex);
-
-        AddRightValues(values, maxValueIndex);
+        FillLeftNodes(values, rootIndex);
+        FillRightNodes(values, rootIndex);
     }
 
     public int Root { get; set; }
+
     public List<int> LeftNodes { get; private set; } = new();
+
     public List<int> RightNodes { get; private set; } = new();
 
     public void PrintTree()
     {
-        for(var i = LeftNodes.Count - 1; i >= 0 ; i--)
+        Console.WriteLine("(right)");
+        for (var i = RightNodes.Count - 1; i >= 0; i--)
         {
-            PrintValue(LeftNodes[i], i + 1);
+            PrintValue(RightNodes[i], i + 1);
         }
 
         PrintValue(Root, 0);
 
-        for(var i = 0; i < RightNodes.Count ; i++)
+        for (var i = 0; i < LeftNodes.Count; i++)
         {
-            PrintValue(RightNodes[i], i + 1);
+            PrintValue(LeftNodes[i], i + 1);
         }
+        Console.WriteLine("(left)");       
     }
 
-    private void PrintValue(int value, int distanceFromStart)
-    { 
+    private List<int> FillLeftNodes(List<int> values, int rootIndex)
+    {
+        for (int i = 0; i < rootIndex; i++)
+            LeftNodes.Add(values[i]);
+
+        LeftNodes.Sort();
+        LeftNodes.Reverse();
+
+        return LeftNodes;
+    }
+
+    private List<int> FillRightNodes(List<int> values, int rootIndex)
+    {
+        for (int i = rootIndex + 1; i < values.Count; i++)
+            RightNodes.Add(values[i]);
+
+        RightNodes.Sort();
+        RightNodes.Reverse();
+
+        return RightNodes;
+    }
+
+    private static void PrintValue(int value, int distanceFromStart)
+    {
         var distanceStr = "";
 
         for (int i = 0; i < distanceFromStart; i++)
@@ -43,21 +66,8 @@ public class SimpleTree
         Console.WriteLine($"{distanceStr}{value}");
     }
 
-    private void AddLeftValues(List<int> values, int maxValueIndex)
-    {
-        for (int i = 0; i < maxValueIndex; i++)
-            LeftNodes.Add(values[i]);
-
-        LeftNodes.Sort();
-        LeftNodes.Reverse();
-    }
-
-    private void AddRightValues(List<int> values, int maxValueIndex)
-    {
-        for (int i = maxValueIndex + 1; i < values.Count; i++)
-            RightNodes.Add(values[i]);
-
-        RightNodes.Sort();
-        RightNodes.Reverse();
-    }
+    public override string ToString() =>
+        $"Values: [{string.Join(", ", LeftNodes)}, {Root}, {string.Join(", ", RightNodes)}]" +
+        $"Left Nodes: [{string.Join(", ", LeftNodes)}]" +
+        $"Right Nodes: [{string.Join(", ", RightNodes)}]";
 }

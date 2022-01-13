@@ -10,7 +10,6 @@ public class Tree
         Root = new(maxValue);
 
         AddLeftValues(values, maxValueIndex);
-
         AddRightValues(values, maxValueIndex);
     }
 
